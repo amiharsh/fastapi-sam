@@ -1,0 +1,76 @@
+# This is a basic workflow to help you get started with Actions
+
+name: AWS Lambda & API gateway deployment demonstration
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Installs Python
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    # Installs PIP
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+          # Setup Python Virtual Venv
+      - name: Install Python Virtual Venv
+        run: pip3 install virtualenv
+
+    # Setup Virtual ENV
+    - name: Virtual ENV
+      uses: actions/cache@v2
+      id: cache-venv
+      with:
+        path: venv
+        key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-venv-
+
+    # Build a Virtual ENV, but inly if it doesn't already exist
+
+    - name: Activate Virtual ENV
+      run: python -m venv venv && source venv/bin/activate && pip3 install -r requirements.txt
+
+    # Configures AWS credentials from github secrets
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+    # Build using SAM 
+    - name: SAM Build
+      uses: youyo/aws-sam-action/python3.8@master
+      with:
+        sam_command: build
+      env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION:  us-east-1
+    # Deploy on AWS
+    - name: sam deploy
+      uses: youyo/aws-sam-action/python3.8@master
+      with:
+          sam_command: 'deploy --stack-name myApp --no-fail-on-empty-changeset'
+      env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
