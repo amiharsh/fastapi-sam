@@ -1,0 +1,10 @@
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build & Test Python App
+          image: python:3.8
+          caches:
+            - pip
+          script:
+            - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
