@@ -23,7 +23,7 @@ pipelines:
                 STACK_NAME: 'bitbucket'
                 DEBUG: 'true'
                 COMMAND: 'all'
-                CAPABILITIES: '[CAPABILITY_IAM]'
+                CAPABILITIES: '[CAPABILITY_AUTO_EXPAND]'
                 SAM_TEMPLATE: 'template.yml'
 
 
