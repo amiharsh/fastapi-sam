@@ -22,8 +22,9 @@ pipelines:
                 S3_BUCKET: 'bitbucketpipelinesfastapi'
                 STACK_NAME: 'bitbucket'
                 DEBUG: 'true'
-                COMMAND: 'all'
+                COMMAND: 'package-only'
                 CAPABILITIES: '[CAPABILITY_AUTO_EXPAND]'
                 SAM_TEMPLATE: 'template.yml'
+                SAM_CONFIG: 'samconfig.toml'
 
 
