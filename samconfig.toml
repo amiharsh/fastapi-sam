@@ -2,9 +2,9 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "sam-app"
-s3_bucket = "samgithubactions"
-s3_prefix = "sam-app"
+stack_name = "bitbucket-app"
+s3_bucket = "bitbucketpipelinesfastapi"
+s3_prefix = "bit-bucket"
 region = "ap-south-1"
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
