@@ -22,6 +22,8 @@ pipelines:
           script:
             - apt-get update && apt-get install -y --no-install-recommends zip unzip
             - zip -r app.zip .
+          artifacts:
+            - app.zip
       - step:
           name: Building The App
           deployment: Test
