@@ -17,7 +17,7 @@ pipelines:
             - pip install virtualenv
             - python -m venv venv && source venv/bin/activate && pip install -r requirements.txt
       #    caches:
-      #     - pip
+      #      - pip
       # - step:
       #     name: Build & Test Python App
       #     caches:
@@ -70,8 +70,6 @@ pipelines:
             #     COMMAND: 'update'
             #     ZIP_FILE: 'app.zip'
             #     DEBUG: 'true'      
-              
-
             - pipe: atlassian/aws-s3-deploy:0.3.2
               variables:
                 AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
@@ -80,7 +78,6 @@ pipelines:
                 S3_BUCKET: 'bitbucketpipelinesfastapi'
                 LOCAL_PATH: '.'
 #                EXTRA_ARGS: '--exclude=* --include=*.zip'
-
             # - pipe: atlassian/aws-sam-deploy:1.3.1
             #   variables:
             #     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
