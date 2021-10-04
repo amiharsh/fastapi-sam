@@ -18,12 +18,12 @@ pipelines:
             - python -m venv venv && source venv/bin/activate && pip install -r requirements.txt
           caches:
             - pip
-      - step:
-          name: Build & Test Python App
-          caches:
-            - pip
-          script:
-            - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      # - step:
+      #     name: Build & Test Python App
+      #     caches:
+      #       - pip
+      #     script:
+      #       - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - step:
           name: Create ZIP of the App
           script:
