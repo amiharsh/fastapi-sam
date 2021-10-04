@@ -20,7 +20,7 @@ pipelines:
       - step:
           name: Create ZIP of the App
           script:
-            - git archive --format zip -o app.zip
+            - git archive --format zip --remote=https://harssssshh@bitbucket.org/harssssshh/fastapi-sam.git -o app.zip
           artifacts:
             - app.zip
       - step:
