@@ -16,21 +16,25 @@ pipelines:
           script:
             - pip install virtualenv
             - python -m venv venv && source venv/bin/activate && pip install -r requirements.txt
+            - apt-get update && apt-get install -y --no-install-recommends zip unzip
+            - zip -r app.zip .
           caches:
             - pip
+          artifacts:
+            - app.zip
       # - step:
       #     name: Build & Test Python App
       #     caches:
       #       - pip
       #     script:
       #       - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - step:
-          name: Create ZIP of the App
-          script:
-            - apt-get update && apt-get install -y --no-install-recommends zip unzip
-            - zip -r app.zip .
-          artifacts:
-            - app.zip
+      # - step:
+      #     name: Create ZIP of the App
+      #     script:
+      #       - apt-get update && apt-get install -y --no-install-recommends zip unzip
+      #       - zip -r app.zip .
+      #     artifacts:
+      #       - app.zip
       - step:
           name: Uploading App To s3
           deployment: Test
