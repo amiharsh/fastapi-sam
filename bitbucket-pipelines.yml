@@ -20,8 +20,7 @@ pipelines:
       - step:
           name: Create ZIP of the App
           script:
-            - apt-get update && apt-get install -y --no-install-recommends zip unzip
-            - zip -r app.zip .
+            - git archive --format zip -o app.zip
           artifacts:
             - app.zip
       - step:
@@ -45,24 +44,25 @@ pipelines:
             #     SAM_TEMPLATE: 'template.yml'
             #     SAM_CONFIG: 'samconfig.toml'
 
-            # - pipe: atlassian/aws-s3-deploy:0.3.2
-            #   variables:
-            #     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-            #     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-            #     AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-            #     S3_BUCKET: 'bitbucketpipelinesfastapi'
-            #     LOCAL_PATH: 'app.zip'
-            #     DEBUG: 'true'
-
-            - pipe: atlassian/aws-lambda-deploy:1.1.0
+            - pipe: atlassian/aws-s3-deploy:0.3.2
               variables:
                 AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
                 AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
                 AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-                FUNCTION_NAME: 'bitbucket-function'
-                COMMAND: 'update'
-                ZIP_FILE: 'app.zip'
-                DEBUG: 'true'      
+                S3_BUCKET: 'bitbucketpipelinesfastapi'
+                LOCAL_PATH: '.'
+                EXTRA_ARGS: '--exclude=* --include=*.zip'
+                DEBUG: 'true'
+
+            # - pipe: atlassian/aws-lambda-deploy:1.1.0
+            #   variables:
+            #     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+            #     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+            #     AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+            #     FUNCTION_NAME: 'bitbucket-function'
+            #     COMMAND: 'update'
+            #     ZIP_FILE: 'app.zip'
+            #     DEBUG: 'true'      
               
 
             # - pipe: atlassian/aws-s3-deploy:0.3.2
