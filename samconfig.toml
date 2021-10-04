@@ -4,7 +4,7 @@ version = 0.1
 [default.deploy.parameters]
 stack_name = "sam-app"
 s3_bucket = "samgithubactions"
-s3_prefix = "bitbucket"
+s3_prefix = "sam-app"
 region = "ap-south-1"
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
