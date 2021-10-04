@@ -1,6 +1,15 @@
 pipelines:
-  branches:
-    master:
+  # branches:
+  #   master:
+  #     - step:
+  #         name: Build & Test Python App
+  #         image: python:3.8
+  #         caches:
+  #           - pip
+  #         script:
+  #           - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+  custom:
+    staging:
       - step:
           name: Build & Test Python App
           image: python:3.8
@@ -8,8 +17,6 @@ pipelines:
             - pip
           script:
             - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-  custom:
-    staging:
       - step:
           name: Building The App
           deployment: Test
@@ -32,7 +39,6 @@ pipelines:
                 AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
                 AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
                 S3_BUCKET: 'bitbucketpipelinesfastapi'
-                # template packaged.yml after pipe atlassian/aws-sam-deploy package-only execution
                 LOCAL_PATH: '.bitbucket/pipelines/generated/pipeline/pipes/atlassian/aws-sam-deploy'
                 EXTRA_ARGS: '--exclude=* --include=packaged.yml'
 
