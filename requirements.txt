@@ -22,5 +22,5 @@ toml==0.10.2
 typing-extensions==3.10.0.2
 urllib3==1.26.7
 uvicorn==0.15.0
-awscli==1.20.53
-colorama==0.4.3
+awscli
+colorama
