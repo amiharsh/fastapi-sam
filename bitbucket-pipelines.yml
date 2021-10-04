@@ -16,7 +16,9 @@ pipelines:
           caches:
             - pip
           script:
-            - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+            - if [ -f requirements.txt ]; then pip install -r requirements.txt -t /pycache; fi
+          artifacts:
+           - /pycache/**
       - step:
           name: Building The App
           deployment: Test
@@ -32,6 +34,14 @@ pipelines:
                 COMMAND: 'package-only'
                 SAM_TEMPLATE: 'template.yml'
                 SAM_CONFIG: 'samconfig.toml'
+
+            - pipe: atlassian/aws-s3-deploy:0.3.2
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                S3_BUCKET: 'bitbucketpipelinesfastapi'
+                LOCAL_PATH: 'pycache'
 
             - pipe: atlassian/aws-s3-deploy:0.3.2
               variables:
