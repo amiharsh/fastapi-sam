@@ -4,7 +4,7 @@ version = 0.1
 [default.deploy.parameters]
 stack_name = "bitbucket-app"
 s3_bucket = "bitbucketpipelinesfastapi"
-s3_prefix = "bit-bucket"
+s3_prefix = "bitbucket"
 region = "ap-south-1"
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
