@@ -30,11 +30,10 @@ Resources:
             Path: /
             Method: any
             RestApiId: !Ref ApiGatewayApi
+      Events:
         getCounter:
           Type: Api
           Properties:
             Path: /items
             Method: get
             RestApiId: !Ref ApiGatewayApi
-
-      
