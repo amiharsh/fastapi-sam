@@ -30,16 +30,10 @@ Resources:
             Path: /
             Method: get
             RestApiId: !Ref ApiGatewayApi
-  LamdbaFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ./    
-      Handler: lambda.handler
-      Runtime: python3.8
-      Events:
         getCounter:
           Type: Api
           Properties:
             Path: /items
             Method: get
             RestApiId: !Ref ApiGatewayApi
+      
