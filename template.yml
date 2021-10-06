@@ -37,7 +37,7 @@ Resources:
             Path: /items
             Method: get
             RestApiId: !Ref ApiGatewayApi
-            Events:
+      Events:
         test:
           Type: Api
           Properties:
